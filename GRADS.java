@@ -1,39 +1,49 @@
 public class GRADS {
     HashMap<string, User> users;
-    
+
     /**
      * Loads the list of system usernames and permissions.
      * @param usersFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadUsers(String usersFile) throws Exception;
+    public void loadUsers(String usersFile) throws Exception {
+        
+    }
 
     /**
      * Loads the list of courses.
      * @param coursesFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadCourses(String coursesFile) throws Exception;
+    public void loadCourses(String coursesFile) throws Exception {
+
+    }
 
     /**
      * Loads the list of system transcripts.
      * @param recordsFile the filename of the transcripts file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadRecords(String recordsFile) throws Exception;
+    public void loadRecords(String recordsFile) throws Exception {
+
+    }
 
     /**
      * Sets the user id (X500) of the user currently using the system.
      * @param userId  the X500 id of the user generating progress summaries.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
-    public void setUser(String userId) throws Exception;
+    public void setUser(String userId) throws Exception {
+
+    }
     
     /**
      * Gets the user id of the user currently using the system.
      * @return  the X500 user id of the user currently using the system.
      */
-    public String getUser();
+    public String getUser() {
+
+    }
     
     /**
      * Gets a list of the userIds of the students that a GPC can view.
@@ -41,7 +51,9 @@ public class GRADS {
      *      system belonging to the current user 
      * @throws Exception is the current user is not a GPC.
      */
-    public List<String> getStudentIDs() throws Exception;
+    public List<String> getStudentIDs() throws Exception {
+
+    }
     
     /**
      * Gets the raw student record data for a given userId.
@@ -50,7 +62,9 @@ public class GRADS {
      * @throws Exception  if the form data could not be retrieved.  SEE NOTE IN 
      *      CLASS HEADER.
      */
-    public StudentRecord getTranscript(String userId) 
+    public StudentRecord getTranscript(String userId) {
+
+    }
             throws Exception;
     
     /**
@@ -60,7 +74,9 @@ public class GRADS {
      * @throws Exception  if the transcript data could not be saved, failed
      * a validity check, or a non-GPC tries to call.  SEE NOTE IN CLASS HEADER.
      */
-    public void updateTranscript(String userId, StudentRecord transcript) 
+    public void updateTranscript(String userId, StudentRecord transcript) {
+
+    }
             throws Exception;
 
     /**
@@ -70,7 +86,9 @@ public class GRADS {
      * @throws Exception  if the note could not be saved or a non-GPC tries to call. 
      * SEE NOTE IN CLASS HEADER.
      */
-    public void addNote(String userId, String note) 
+    public void addNote(String userId, String note) {
+
+    }
             throws Exception;
 
     /**
@@ -81,7 +99,10 @@ public class GRADS {
      * SEE NOTE IN CLASS HEADER.
      */
     public ProgressSummary generateProgressSummary(String userId) 
-            throws Exception;
+            throws Exception 
+        {
+
+        }
 
     /**
      * Generates a new progress summary, assuming that the student passes the
@@ -93,5 +114,8 @@ public class GRADS {
      * are invalid. SEE NOTE IN CLASS HEADER.
      */
     public ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) 
-            throws Exception;
+            throws Exception
+        {
+
+        }
 }
