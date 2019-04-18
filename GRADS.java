@@ -1,1 +1,3 @@
-;kwdj;lgksdjfh
+public class GRADS {
+    
+}
