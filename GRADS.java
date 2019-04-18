@@ -1,22 +1,31 @@
 import java.util.HashMap;
 import java.util.List;
+import java.io.IOException;
+import java.io.FileNotFoundException; 
+import java.io.FileReader; 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class GRADS {
     HashMap<String, User> users;
 
-
-    public static void main() {
-        Gson gson = new GsonBuilder().create();
+    public static void main(String[] args) throws Exception {
+        loadUsers("SS");
+        System.out.println("HELLO");
     }
     /**
      * Loads the list of system usernames and permissions.
      * @param usersFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadUsers(String usersFile) throws Exception {
-
+    public static void loadUsers(String usersFile) throws Exception {
+        try (FileReader reader = new FileReader("users.json")) {
+            Gson gson = new Gson();
+            User[] u = gson.fromJson(reader, User[].class);
+            for (int i = 0; i < u.length; i++) {
+                System.out.println(u[i].getNetworkID());
+            }
+        }
     }
 
     /**

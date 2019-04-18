@@ -1,20 +1,20 @@
 public class User {
-    String userID;
+    String networkID;
     String firstName;
     String lastName;
     String role;
     String program;
 
-    public User(String newUserID, String newFirstName, String newLastName, String newRole, String newProgram) {
-        userID = newUserID;
-        firstName = newFirstName;
-        lastName = newLastName;
-        role = newRole;
-        program = newProgram;
-    }
+    // public User(String newUserID, String newFirstName, String newLastName, String newRole, String newProgram) {
+    //     userID = newUserID;
+    //     firstName = newFirstName;
+    //     lastName = newLastName;
+    //     role = newRole;
+    //     program = newProgram;
+    // }
 
-    String getUserID() {
-        return userID;
+    String getNetworkID() {
+        return networkID;
     }
     String getFirstName() {
         return firstName;
