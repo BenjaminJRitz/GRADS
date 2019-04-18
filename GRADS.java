@@ -1,13 +1,22 @@
-public class GRADS {
-    HashMap<string, User> users;
+import java.util.HashMap;
+import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+public class GRADS {
+    HashMap<String, User> users;
+
+
+    public static void main() {
+        Gson gson = new GsonBuilder().create();
+    }
     /**
      * Loads the list of system usernames and permissions.
      * @param usersFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public void loadUsers(String usersFile) throws Exception {
-        
+
     }
 
     /**
@@ -42,7 +51,7 @@ public class GRADS {
      * @return  the X500 user id of the user currently using the system.
      */
     public String getUser() {
-
+        return "";
     }
     
     /**
@@ -52,7 +61,7 @@ public class GRADS {
      * @throws Exception is the current user is not a GPC.
      */
     public List<String> getStudentIDs() throws Exception {
-
+        return null;
     }
     
     /**
@@ -62,10 +71,9 @@ public class GRADS {
      * @throws Exception  if the form data could not be retrieved.  SEE NOTE IN 
      *      CLASS HEADER.
      */
-    public StudentRecord getTranscript(String userId) {
-
+    public StudentRecord getTranscript(String userId) throws Exception {
+        return null;
     }
-            throws Exception;
     
     /**
      * Saves a new set of student data to the records data.  
@@ -74,10 +82,9 @@ public class GRADS {
      * @throws Exception  if the transcript data could not be saved, failed
      * a validity check, or a non-GPC tries to call.  SEE NOTE IN CLASS HEADER.
      */
-    public void updateTranscript(String userId, StudentRecord transcript) {
+    public void updateTranscript(String userId, StudentRecord transcript) throws Exception {
 
     }
-            throws Exception;
 
     /**
      * Appends a note to a student record.  
@@ -86,10 +93,9 @@ public class GRADS {
      * @throws Exception  if the note could not be saved or a non-GPC tries to call. 
      * SEE NOTE IN CLASS HEADER.
      */
-    public void addNote(String userId, String note) {
+    public void addNote(String userId, String note) throws Exception {
 
     }
-            throws Exception;
 
     /**
      * Generates progress summary
@@ -98,11 +104,9 @@ public class GRADS {
      * @throws Exception  if the progress summary could not be generated.  
      * SEE NOTE IN CLASS HEADER.
      */
-    public ProgressSummary generateProgressSummary(String userId) 
-            throws Exception 
-        {
-
-        }
+    public ProgressSummary generateProgressSummary(String userId) throws Exception {
+        return null;
+    }
 
     /**
      * Generates a new progress summary, assuming that the student passes the
@@ -113,9 +117,7 @@ public class GRADS {
      * @throws Exception  if the progress summary could not be generated or the courses  
      * are invalid. SEE NOTE IN CLASS HEADER.
      */
-    public ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) 
-            throws Exception
-        {
-
-        }
+    public ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception {
+        return null;
+    }
 }
