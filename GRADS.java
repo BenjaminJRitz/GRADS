@@ -10,7 +10,10 @@ public class GRADS {
     HashMap<String, User> users;
 
     public static void main(String[] args) throws Exception {
+        System.out.println("Printing users names.");
         loadUsers("SS");
+        System.out.println("Printing course names");
+        loadCourses("TEST");
         System.out.println("HELLO");
     }
     /**
@@ -33,9 +36,15 @@ public class GRADS {
      * @param coursesFile the filename of the users file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadCourses(String coursesFile) throws Exception {
-
-    }
+    public static void loadCourses(String coursesFile) throws Exception {
+        try (FileReader reader = new FileReader("courses.json")) {
+            Gson gson = new Gson();
+            Course[] u = gson.fromJson(reader, Course[].class);
+            for (int i = 0; i < u.length; i++) {
+                System.out.println(u[i].getName());
+            }  // Ending bracket for for loop
+        }  // Ending bracket for try
+    }  // Ending bracket for method loadCourses
 
     /**
      * Loads the list of system transcripts.
