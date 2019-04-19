@@ -1,21 +1,32 @@
 public class StudentRecord {
-    //student:
-        String studentID;
-        String networkId;
-        String firstName;
-        String lastName;
-        
-        //perhaps major should be its own class
-        String major;
-            String termBegan;
-            String semester;
-            String year;
-        //perhaps advisor should be its own class
-        Advisor advisor;
-            //String program;
-            //String firstName;
-            //String lastName;
-        CourseTaken[] coursesTaken;
-        String[] notes;
+    Student student;
+    String major;
+    TermBegan termBegan;
+    Advisor advisor;
+    CoursesTaken[] coursesTaken = null;
+    String[] notes;
 
-}
+    Student getStudent() {
+        return student;
+    }  // Ending bracket for method getStudent
+    
+    String getMajor() {
+        return major;
+    }  // Ending bracket for method getMajor
+
+    TermBegan getTermBegan() {
+        return termBegan;
+    }  // Ending bracket for method getTermBegan
+
+    Advisor getAdvisor() {
+        return advisor;
+    }  // Ending bracket for method getAdvisor
+
+    CoursesTaken[] getCoursesTaken() {
+        return coursesTaken;
+    }  // Ending bracket for method getCoursesTaken
+
+    String[] getNotes() {
+        return notes;
+    }  // Ending bracket for method getNotes
+}  // Ending bracket for class StudentRecord

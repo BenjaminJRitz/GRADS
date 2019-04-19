@@ -14,6 +14,8 @@ public class GRADS {
         loadUsers("SS");
         System.out.println("Printing course names");
         loadCourses("TEST");
+        System.out.println("Printing student id's from student records.");
+        loadRecords("test");
         System.out.println("HELLO");
     }
     /**
@@ -51,9 +53,22 @@ public class GRADS {
      * @param recordsFile the filename of the transcripts file.
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
-    public void loadRecords(String recordsFile) throws Exception {
-
-    }
+    public static void loadRecords(String recordsFile) throws Exception {
+        try (FileReader reader = new FileReader("students.json")) {
+            Gson gson = new Gson();
+            StudentRecord[] u = gson.fromJson(reader, StudentRecord[].class);
+            for (int i = 0; i < u.length; i++) {
+                System.out.println(u[i].getStudent().getStudentId());
+                if (u[i].getCoursesTaken() != null) {
+                    for (int j = 0; j < u[i].getCoursesTaken().length; j++) {
+                        System.out.println(u[i].getCoursesTaken()[j].getGrade());
+                    }  // Ending bracket for inner for loop
+                } else {
+                    System.out.println("This student has no Grades");
+                }  // Ending bracket for if else
+            }  // Ending bracket for for loop
+        }  // Ending bracket for try
+    }  // Ending bracket for method loadCourses
 
     /**
      * Sets the user id (X500) of the user currently using the system.
