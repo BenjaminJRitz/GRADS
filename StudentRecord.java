@@ -4,7 +4,7 @@ public class StudentRecord {
     TermBegan termBegan;
     Advisor advisor;
     CoursesTaken[] coursesTaken = null;
-    String[] notes;
+    String[] notes = null;
 
     Student getStudent() {
         return student;

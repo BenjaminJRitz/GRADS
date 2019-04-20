@@ -59,6 +59,12 @@ public class GRADS {
             StudentRecord[] u = gson.fromJson(reader, StudentRecord[].class);
             for (int i = 0; i < u.length; i++) {
                 System.out.println(u[i].getStudent().getStudentId());
+                System.out.println(u[i].getMajor());
+                System.out.println(u[i].getAdvisor().getFirstName());
+                System.out.println(u[i].getTermBegan().getYearBegan());
+                if (u[i].getNotes()[0] != null) {
+                    System.out.println(u[i].getNotes()[0]);
+                }  // Ending bracket for if statement
                 if (u[i].getCoursesTaken() != null) {
                     for (int j = 0; j < u[i].getCoursesTaken().length; j++) {
                         System.out.println(u[i].getCoursesTaken()[j].getGrade());
