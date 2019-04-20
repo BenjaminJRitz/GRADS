@@ -1,5 +1,5 @@
 public class CompEng {
-    //0-3 OR 4-7
+    //all of
     String[] CSCE_CAROLINA_CORE_SCI = {"CHEM111", "CHEM111L", "PHYS211", "PHYS211L"};
     // ALL OF
     String[] CSCE_CAROLINA_CORE_ARP = {"MATH141", "MATH142"};
