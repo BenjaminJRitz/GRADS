@@ -32,7 +32,7 @@ public class GradReqs {
 	//one of these
 	String[] CAROLINA_CORE_INF = {"ENGL102", "LIBR101", "SLIS202", "SPCH145", "STAT112"};
 	//one of these
-	Srtrin[] GEN_ED_ENGL = {"ENGL462", "ENGL463"};
+	String[] GEN_ED_ENGL = {"ENGL462", "ENGL463"};
 	
 	
 }
