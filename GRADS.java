@@ -11,11 +11,11 @@ public class GRADS {
 
     public static void main(String[] args) throws Exception {
         System.out.println("Printing users names.");
-        loadUsers("SS");
+        loadUsers("users.json");
         System.out.println("Printing course names");
-        loadCourses("TEST");
+        loadCourses("courses.json");
         System.out.println("Printing student id's from student records.");
-        loadRecords("test");
+        loadRecords("students.json");
         System.out.println("HELLO");
     }
     /**
@@ -24,7 +24,7 @@ public class GRADS {
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public static void loadUsers(String usersFile) throws Exception {
-        try (FileReader reader = new FileReader("users.json")) {
+        try (FileReader reader = new FileReader(usersFile)) {
             Gson gson = new Gson();
             User[] u = gson.fromJson(reader, User[].class);
             for (int i = 0; i < u.length; i++) {
@@ -39,7 +39,7 @@ public class GRADS {
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public static void loadCourses(String coursesFile) throws Exception {
-        try (FileReader reader = new FileReader("courses.json")) {
+        try (FileReader reader = new FileReader(coursesFile)) {
             Gson gson = new Gson();
             Course[] u = gson.fromJson(reader, Course[].class);
             for (int i = 0; i < u.length; i++) {
@@ -54,7 +54,7 @@ public class GRADS {
      * @throws Exception for I/O errors.  SEE NOTE IN CLASS HEADER.
      */
     public static void loadRecords(String recordsFile) throws Exception {
-        try (FileReader reader = new FileReader("students.json")) {
+        try (FileReader reader = new FileReader(recordsFile)) {
             Gson gson = new Gson();
             StudentRecord[] u = gson.fromJson(reader, StudentRecord[].class);
             for (int i = 0; i < u.length; i++) {

@@ -9,7 +9,7 @@ public class Course {
 
     String getId() {
         return id;
-    }  // Ending bracekt for method getId
+    }  // Ending bracket for method getId
 
     String getNumCredits() {
         return numCredits;

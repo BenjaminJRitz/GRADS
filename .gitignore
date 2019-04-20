@@ -4,3 +4,16 @@ GRADS.class
 ProgressSummary.class
 StudentRecord.class
 User.class
+Requirement.java
+Advisor.class
+CompEng.class
+CompSci.class
+CompInfo.class
+GradReqs.class
+Requirement.class
+RequirementEvaluated.class
+RequirementType.class
+Term.class
+TermBegan.class
+Major.class
+Student.class

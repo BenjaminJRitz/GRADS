@@ -3,7 +3,7 @@ public class StudentRecord {
     String major;
     TermBegan termBegan;
     Advisor advisor;
-    CoursesTaken[] coursesTaken = null;
+    CourseTaken[] coursesTaken = null;
     String[] notes = null;
 
     Student getStudent() {
@@ -22,7 +22,7 @@ public class StudentRecord {
         return advisor;
     }  // Ending bracket for method getAdvisor
 
-    CoursesTaken[] getCoursesTaken() {
+    CourseTaken[] getCoursesTaken() {
         return coursesTaken;
     }  // Ending bracket for method getCoursesTaken
 
