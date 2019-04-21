@@ -43,4 +43,13 @@ public class CompSci {
         )
 
     };
+
+    static RequirementEvaluated[] evaluate(StudentRecord sr) {
+		RequirementEvaluated[] rv = new RequirementEvaluated[requirements.length];
+		for (int i = 0; i < requirements.length; i++) {
+			rv[i] = new RequirementEvaluated(requirements[i],sr);
+		}
+		return rv;
+    }
+    
 } // Ending bracket for class CompSci

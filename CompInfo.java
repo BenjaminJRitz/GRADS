@@ -38,4 +38,13 @@ public class CompInfo {
                 "CIS_BIM_ELECTIVE", RequirementType.TWO_OF, new String[] {"ACCT324", "ECON311", "ECON379", "FINA333", "IBUS301", "MGMT472", "MKTG350", "MKTG351", "MGSC392", "MGSC395", "MGSC594"}
         )
     };
+
+    static RequirementEvaluated[] evaluate(StudentRecord sr) {
+		RequirementEvaluated[] rv = new RequirementEvaluated[requirements.length];
+		for (int i = 0; i < requirements.length; i++) {
+			rv[i] = new RequirementEvaluated(requirements[i],sr);
+		}
+		return rv;
+    }
+    
 }  // Ending bracket for class CompInfo

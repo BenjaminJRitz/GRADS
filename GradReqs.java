@@ -61,7 +61,7 @@ public class GradReqs {
 			"GEN_ED_ENGL", RequirementType.ONE_OF, new String[] {
 				"ENGL462", "ENGL463"
 			}
-		),
+		)
 	};
 	
 	static RequirementEvaluated[] evaluate(StudentRecord sr) {

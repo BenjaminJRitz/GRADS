@@ -27,4 +27,13 @@ public class CompEng {
             "CPE_EE", RequirementType.THREE_OF, new String[] {"ELCT101", "ELCT221", "ELCT222", "ELCT371"}
         )
     };
+
+    static RequirementEvaluated[] evaluate(StudentRecord sr) {
+		RequirementEvaluated[] rv = new RequirementEvaluated[requirements.length];
+		for (int i = 0; i < requirements.length; i++) {
+			rv[i] = new RequirementEvaluated(requirements[i],sr);
+		}
+		return rv;
+    }
+    
 }
