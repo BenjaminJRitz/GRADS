@@ -11,7 +11,7 @@ public class CourseTaken {
         return term;
     }  // Ending bracket for method getTerm
 
-    String getGrade() {
-        return grade;
+    Grade getGrade() {
+        return Grade.valueOf(grade);
     }  // Ending bracket for method getGrade
 }  // Ending bracket for class Courseaken

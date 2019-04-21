@@ -1,10 +1,12 @@
+import java.util.ArrayList;
+
 public class StudentRecord {
     Student student;
     String major;
     TermBegan termBegan;
     Advisor advisor;
-    CourseTaken[] coursesTaken = null;
-    String[] notes = null;
+    ArrayList<CourseTaken> coursesTaken = new ArrayList<>();
+    ArrayList<String> notes = new ArrayList<>();
 
     Student getStudent() {
         return student;
@@ -22,23 +24,29 @@ public class StudentRecord {
         return advisor;
     }  // Ending bracket for method getAdvisor
 
-    CourseTaken[] getCoursesTaken() {
+    ArrayList<CourseTaken> getCoursesTaken() {
         return coursesTaken;
     }  // Ending bracket for method getCoursesTaken
 
-    String[] getNotes() {
+    ArrayList<String> getNotes() {
         return notes;
     }  // Ending bracket for method getNotes
 
-    void addCourse(CoursesTaken c) {
-
+    void addCourse(CourseTaken c) {
+        coursesTaken.add(c);
     }
 
     void addNote(String n) {
-
+        notes.add(n);
     }
 
-    float getGPA() {
-        return 0;
+    double getGPA() {
+        double gradePoints = 0;
+        double units = 0;
+        for (CourseTaken c : coursesTaken) {
+            units += c.getCourse().getNumCredits();
+            gradePoints += c.getGrade().value() * c.getCourse().getNumCredits();
+        }
+        return gradePoints / units;
     }
 }  // Ending bracket for class StudentRecord

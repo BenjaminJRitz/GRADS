@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ProgressSummary {
     StudentRecord record;
 
@@ -9,7 +12,7 @@ public class ProgressSummary {
      * This method will have to compute the GPA for the passed in student record.
      * This can get the grade for each class taken from the coursesTaken array.
     */
-    float getGPA() {
+    double getGPA() {
         return record.getGPA();
     }  // Ending bracket for method getGPA
 
@@ -29,9 +32,23 @@ public class ProgressSummary {
         return record.getTermBegan();
     }  // Ending bracket for method getSemesterBegan
 
-    RequirementEvaluated[] getRequirements() {
-        return null;
+    ArrayList<RequirementEvaluated> getRequirements() {
+        ArrayList<RequirementEvaluated> rv = new ArrayList<RequirementEvaluated>(Arrays.asList(GradReqs.evaluate(record)));
+        switch (record.getMajor()) {
+            case "COMPUTER_INFORMATION_SYSTEMS":
+                rv.addAll(Arrays.asList(CompInfo.evaluate(record)));
+                break;
+            case "COMPUTER_SCIENCE":
+                rv.addAll(Arrays.asList(CompSci.evaluate(record)));
+                break;
+            case "COMPUTER_ENGINEERING":
+                rv.addAll(Arrays.asList(CompEng.evaluate(record)));
+                break;
+        }
+        return rv;
     }  // Ending bracket for method getRequirements
 
-
+    Double getCompletionPercentage() {
+        return 0.0;
+    }
 }

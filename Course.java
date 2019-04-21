@@ -11,8 +11,8 @@ public class Course {
         return id;
     }  // Ending bracket for method getId
 
-    String getNumCredits() {
-        return numCredits;
-    }  // Ending braceket for method getNumCredits
+    double getNumCredits() {
+        return Double.parseDouble(numCredits);
+    }  // Ending bracket for method getNumCredits
     
-}  // Ending brackets for class Course
+}  // Ending bracket for class Course

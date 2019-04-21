@@ -5,76 +5,66 @@ class RequirementEvaluated {
     boolean passed;
     ArrayList<CourseTaken> applicable = new ArrayList<>();
     String note;
+    StudentRecord sr;
 
-    public RequirementEvaluated(Requirement newRequirement, StudentRecord sr) {
-        boolean bflag;
-        int iflag = 0;
+    public RequirementEvaluated(Requirement newRequirement, StudentRecord newsr) {
+        sr = newsr;
+        passed = false;
         switch (r.rule) {
             case GPA_GREATER_THAN_TWO:
+                if (sr.getGPA() >= 2.0) 
+                    passed = true;
+                break;
+            case APPLICATION_AREA:
                 passed = true;
+                //unimplemented
+                break;
+            case ALL_C_OR_BETTER:
+            passed = true;
+                for(int i = 0; i < r.getCourses().length; i++) {
+                    for (int j = 0; j < sr.getCoursesTaken().size(); j++) {
+                        if (r.getCourses()[i].equals(sr.getCoursesTaken().get(j).getCourse().getName())) {
+                            if (sr.getCoursesTaken().get(j).getGrade().value() < 2.0) {
+                                passed = false;
+                            }
+                        }
+                    }
+                }
                 break;
             case ONE_OF:
-                passed = false;
-                for (int i = 0; i < r.getCourses().length; i++) {
-                    for (int j = 0; j < sr.getCoursesTaken().length; j++) {
-                        if (r.getCourses()[i].equals(sr.getCoursesTaken()[j].getCourse().getName())) {
-                            passed = true;
-                            applicable.add(sr.getCoursesTaken()[j]);
-                            return;
-                        }
-                    }
-                }
-                break;
-            case ALL_OF:
-                passed = true;
-                for (int i = 0; i < r.getCourses().length; i++) {
-                    bflag = false;
-                    for (int j = 0; j < sr.getCoursesTaken().length; j++) {
-                        if (r.getCourses()[i].equals(sr.getCoursesTaken()[j].getCourse().getName())) {
-                            bflag = true;
-                            applicable.add(sr.getCoursesTaken()[j]);
-                            break;
-                        }
-                    }
-                    if (bflag ==  false) {
-                        passed = false;
-                    }
-                }
+                process_X_of(1);
                 break;
             case TWO_OF:
-                passed = false;
-                for (int i = 0; i < r.getCourses().length; i++) {
-                    for (int j = 0; j < sr.getCoursesTaken().length; j++) {
-                        if (r.getCourses()[i].equals(sr.getCoursesTaken()[j].getCourse().getName())) {
-                            iflag++;
-                            if (iflag < 2) {
-                                applicable.add(sr.getCoursesTaken()[j]);
-                            } else {
-                                passed = true;
-                                return;
-                            }
-                        }
-                    }
-                }
+                process_X_of(2);
                 break;
             case THREE_OF:
-                passed = false;
-                for (int i = 0; i < r.getCourses().length; i++) {
-                    for (int j = 0; j < sr.getCoursesTaken().length; j++) {
-                        if (r.getCourses()[i].equals(sr.getCoursesTaken()[j].getCourse().getName())) {
-                            iflag++;
-                            if (iflag < 3) {
-                                applicable.add(sr.getCoursesTaken()[j]);
-                            } else {
-                                passed = true;
-                                return;
-                            }
-                        }
+                process_X_of(3);
+                break;
+            case FOUR_OF:
+                process_X_of(4);
+                break;
+            case NINE_OF:
+                process_X_of(9);
+                break;
+            case ALL_OF:
+                process_X_of(r.getCourses().length);
+                break;
+        }
+    }
+
+    private void process_X_of(int x) {
+        int iflag = 0;
+        for (int i = 0; i < r.getCourses().length; i++) {
+            for (int j = 0; j < sr.getCoursesTaken().size(); j++) {
+                if (r.getCourses()[i].equals(sr.getCoursesTaken().get(j).getCourse().getName())) {
+                    iflag++;
+                    applicable.add(sr.getCoursesTaken().get(j));
+                    if (iflag == x) {
+                        passed = true;
+                        return;
                     }
                 }
-                break;
-            default:
-                passed = true;
+            }
         }
     }
 }
