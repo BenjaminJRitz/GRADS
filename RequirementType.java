@@ -2,6 +2,8 @@ enum RequirementType {
     ONE_OF,
     TWO_OF,
     THREE_OF,
+    FOUR_OF,
+    NINE_OF,
     ALL_OF,
     APPLICATION_AREA,
     ALL_C_OR_BETTER,
