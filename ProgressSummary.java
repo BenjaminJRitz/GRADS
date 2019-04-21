@@ -33,7 +33,7 @@ public class ProgressSummary {
     }  // Ending bracket for method getSemesterBegan
 
     ArrayList<RequirementEvaluated> getRequirements() {
-        ArrayList<RequirementEvaluated> rv = new ArrayList<RequirementEvaluated>(Arrays.asList(GradReqs.evaluate(record)));
+        var rv = new ArrayList<>(Arrays.asList(GradReqs.evaluate(record)));
         switch (record.getMajor()) {
             case "COMPUTER_INFORMATION_SYSTEMS":
                 rv.addAll(Arrays.asList(CompInfo.evaluate(record)));
@@ -49,6 +49,13 @@ public class ProgressSummary {
     }  // Ending bracket for method getRequirements
 
     Double getCompletionPercentage() {
-        return 0.0;
+        var allMileStones = this.getRequirements();
+        double completionPoints = 0.0;
+        for (var c : allMileStones) {
+            if (c.passed) {
+                completionPoints += 1;
+            }
+        }
+        return completionPoints/allMileStones.size();
     }
 }
