@@ -29,4 +29,16 @@ public class StudentRecord {
     String[] getNotes() {
         return notes;
     }  // Ending bracket for method getNotes
+
+    void addCourse(CoursesTaken c) {
+
+    }
+
+    void addNote(String n) {
+
+    }
+
+    float getGPA() {
+        return 0;
+    }
 }  // Ending bracket for class StudentRecord
