@@ -44,8 +44,10 @@ public class StudentRecord {
         double gradePoints = 0;
         double units = 0;
         for (CourseTaken c : coursesTaken) {
-            units += c.getCourse().getNumCredits();
-            gradePoints += c.getGrade().value() * c.getCourse().getNumCredits();
+            if (c.getGrade() != Grade.INVALID) {
+                units += c.getCourse().getNumCredits();
+                gradePoints += c.getGrade().value() * c.getCourse().getNumCredits();
+            }
         }
         return gradePoints / units;
     }

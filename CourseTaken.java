@@ -12,6 +12,12 @@ public class CourseTaken {
     }  // Ending bracket for method getTerm
 
     Grade getGrade() {
-        return Grade.valueOf(grade);
+        Grade rv;
+        if (grade.equals("_")) {
+            rv = Grade.INVALID;
+        } else {
+            rv = Grade.valueOf(grade);
+        }
+        return rv;
     }  // Ending bracket for method getGrade
 }  // Ending bracket for class Courseaken
