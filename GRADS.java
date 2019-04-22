@@ -50,7 +50,7 @@ public class GRADS {
             Gson gson = new Gson();
             Course[] u = gson.fromJson(reader, Course[].class);
             for (int i = 0; i < u.length; i++) {
-                System.out.println(u[i].getName());
+                //System.out.println(u[i].getName());
                 courses.put(u[i].getName(), u[i]);
             }
         }  // Ending bracket for try
