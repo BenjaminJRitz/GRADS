@@ -15,6 +15,7 @@ public class GRADS {
 
     public static void main(String[] args) throws Exception {
         users = new HashMap<>();
+        courses = new HashMap<>();
         records = new HashMap<>();
         System.out.println("Printing users names.");
         loadUsers("users.json");
@@ -49,11 +50,9 @@ public class GRADS {
             Gson gson = new Gson();
             Course[] u = gson.fromJson(reader, Course[].class);
             for (int i = 0; i < u.length; i++) {
+                System.out.println(u[i].getName());
                 courses.put(u[i].getName(), u[i]);
             }
-            for (int i = 0; i < u.length; i++) {
-                System.out.println(u[i].getName());
-            }  // Ending bracket for for loop
         }  // Ending bracket for try
     }  // Ending bracket for method loadCourses
 
@@ -118,9 +117,9 @@ public class GRADS {
     public List<String> getStudentIDs() throws Exception {
         ArrayList<String> rv = new ArrayList<>();
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
-            for (StudentRecord sr : records) {
+            for (StudentRecord sr : records.values()) {
                 if (sr.getMajor().equals(currentUser.getProgram())) {
-                    rv.add(sr.getStudent().getNetworkID())
+                    rv.add(sr.getStudent().getNetworkID());
                 }
             }
         } else {
@@ -137,11 +136,13 @@ public class GRADS {
      *      CLASS HEADER.
      */
     public StudentRecord getTranscript(String userId) throws Exception {
+        StudentRecord rv = null;
         if (records.containsKey(userId)) {
-            return records.get(userId);
+            rv = records.get(userId);
         } else {
             //throw some error
         }
+        return rv;
     }
     
     /**
