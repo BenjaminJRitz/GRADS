@@ -196,6 +196,10 @@ public class GRADS {
      * are invalid. SEE NOTE IN CLASS HEADER.
      */
     public ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception {
-        return null;
+        StudentRecord sr = getTranscript(userId);
+        for (CourseTaken c : courses) {
+            sr.addCourse(c);
+        }
+        return new ProgressSummary(sr);
     }
 }
