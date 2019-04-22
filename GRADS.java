@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.io.IOException;
@@ -7,9 +8,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class GRADS {
-    HashMap<String, User> users;
+    static HashMap<String, User> users;
+    static HashMap<String, StudentRecord> records;
+    static HashMap<String, Course> courses;
+    User currentUser;
 
     public static void main(String[] args) throws Exception {
+        users = new HashMap<>();
+        records = new HashMap<>();
         System.out.println("Printing users names.");
         loadUsers("users.json");
         System.out.println("Printing course names");
@@ -28,7 +34,7 @@ public class GRADS {
             Gson gson = new Gson();
             User[] u = gson.fromJson(reader, User[].class);
             for (int i = 0; i < u.length; i++) {
-                System.out.println(u[i].getNetworkID());
+                users.put(u[i].getNetworkID(), u[i]);
             }
         }
     }
@@ -42,6 +48,9 @@ public class GRADS {
         try (FileReader reader = new FileReader(coursesFile)) {
             Gson gson = new Gson();
             Course[] u = gson.fromJson(reader, Course[].class);
+            for (int i = 0; i < u.length; i++) {
+                courses.put(u[i].getName(), u[i]);
+            }
             for (int i = 0; i < u.length; i++) {
                 System.out.println(u[i].getName());
             }  // Ending bracket for for loop
@@ -58,16 +67,19 @@ public class GRADS {
             Gson gson = new Gson();
             StudentRecord[] u = gson.fromJson(reader, StudentRecord[].class);
             for (int i = 0; i < u.length; i++) {
+                records.put(u[i].getStudent().getNetworkID(), u[i]);
+            }
+            for (int i = 0; i < u.length; i++) {
                 System.out.println(u[i].getStudent().getStudentId());
                 System.out.println(u[i].getMajor());
                 System.out.println(u[i].getAdvisor().getFirstName());
                 System.out.println(u[i].getTermBegan().getYearBegan());
-                if (u[i].getNotes()[0] != null) {
-                    System.out.println(u[i].getNotes()[0]);
+                if (u[i].getNotes().get(0) != null) {
+                    System.out.println(u[i].getNotes().get(0));
                 }  // Ending bracket for if statement
                 if (u[i].getCoursesTaken() != null) {
-                    for (int j = 0; j < u[i].getCoursesTaken().length; j++) {
-                        System.out.println(u[i].getCoursesTaken()[j].getGrade());
+                    for (int j = 0; j < u[i].getCoursesTaken().size(); j++) {
+                        System.out.println(u[i].getCoursesTaken().get(j).getGrade());
                     }  // Ending bracket for inner for loop
                 } else {
                     System.out.println("This student has no Grades");
@@ -82,7 +94,11 @@ public class GRADS {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      */
     public void setUser(String userId) throws Exception {
-
+        if (users.containsKey(userId)) {
+            currentUser = users.get(userId);
+        } else {
+            //throw some error
+        }
     }
     
     /**
@@ -90,7 +106,7 @@ public class GRADS {
      * @return  the X500 user id of the user currently using the system.
      */
     public String getUser() {
-        return "";
+        return currentUser.getNetworkID();
     }
     
     /**
@@ -100,7 +116,17 @@ public class GRADS {
      * @throws Exception is the current user is not a GPC.
      */
     public List<String> getStudentIDs() throws Exception {
-        return null;
+        ArrayList<String> rv = new ArrayList<>();
+        if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
+            for (StudentRecord sr : records) {
+                if (sr.getMajor().equals(currentUser.getProgram())) {
+                    rv.add(sr.getStudent().getNetworkID())
+                }
+            }
+        } else {
+            //throw some error
+        }
+        return rv;
     }
     
     /**
@@ -111,7 +137,11 @@ public class GRADS {
      *      CLASS HEADER.
      */
     public StudentRecord getTranscript(String userId) throws Exception {
-        return null;
+        if (records.containsKey(userId)) {
+            return records.get(userId);
+        } else {
+            //throw some error
+        }
     }
     
     /**
@@ -122,7 +152,11 @@ public class GRADS {
      * a validity check, or a non-GPC tries to call.  SEE NOTE IN CLASS HEADER.
      */
     public void updateTranscript(String userId, StudentRecord transcript) throws Exception {
-
+        if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
+            records.put(userId, transcript);
+        } else {
+            //throw some error
+        }
     }
 
     /**
@@ -133,7 +167,11 @@ public class GRADS {
      * SEE NOTE IN CLASS HEADER.
      */
     public void addNote(String userId, String note) throws Exception {
-
+        if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
+            records.get(userId).addNote(note);
+        } else {
+            //throw some error
+        }
     }
 
     /**
@@ -144,7 +182,7 @@ public class GRADS {
      * SEE NOTE IN CLASS HEADER.
      */
     public ProgressSummary generateProgressSummary(String userId) throws Exception {
-        return null;
+        return new ProgressSummary(this.getTranscript(userId));
     }
 
     /**
