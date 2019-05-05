@@ -3,10 +3,6 @@ public class TermBegan {
     String semester;
     String year;
 
-   // String getMajor() {
-   //     return major;
-   // }  // Ending bracket for method getmajor
-
     String getSemesterBegan() {
         return semester;
     }  // Ending bracket for method getSemesterBegan

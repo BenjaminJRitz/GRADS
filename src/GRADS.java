@@ -11,19 +11,19 @@ public class GRADS {
     static HashMap<String, User> users;
     static HashMap<String, StudentRecord> records;
     static HashMap<String, Course> courses;
-    User currentUser;
+    static User currentUser;
 
     public static void main(String[] args) throws Exception {
-        users = new HashMap<>();
+        init();
+        loadUsers("users.json");
+        loadCourses("courses.json");
+        loadRecords("students.json");
+    }
+    
+    public static void init() throws Exception {
+    	users = new HashMap<>();
         courses = new HashMap<>();
         records = new HashMap<>();
-        System.out.println("Printing users names.");
-        loadUsers("users.json");
-        System.out.println("Printing course names");
-        loadCourses("courses.json");
-        System.out.println("Printing student id's from student records.");
-        loadRecords("students.json");
-        System.out.println("HELLO");
     }
     /**
      * Loads the list of system usernames and permissions.
@@ -68,6 +68,7 @@ public class GRADS {
             for (int i = 0; i < u.length; i++) {
                 records.put(u[i].getStudent().getNetworkID(), u[i]);
             }
+            /*
             for (int i = 0; i < u.length; i++) {
                 System.out.println(u[i].getStudent().getStudentId());
                 System.out.println(u[i].getMajor());
@@ -84,6 +85,7 @@ public class GRADS {
                     System.out.println("This student has no Grades");
                 }  // Ending bracket for if else
             }  // Ending bracket for for loop
+            */
         }  // Ending bracket for try
     }  // Ending bracket for method loadCourses
 
@@ -93,7 +95,8 @@ public class GRADS {
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
      * @throws UserNotFoundException 
      */
-    public void setUser(String userId) throws UserNotFoundException {
+    public static void setUser(String userId) throws UserNotFoundException {
+    	System.out.println("ERROR");
         if (users.containsKey(userId)) {
             currentUser = users.get(userId);
         } else {
@@ -108,7 +111,7 @@ public class GRADS {
      * Gets the user id of the user currently using the system.
      * @return  the X500 user id of the user currently using the system.
      */
-    public String getUser() {
+    public static String getUser() {
         return currentUser.getNetworkID();
     }
     
@@ -118,7 +121,7 @@ public class GRADS {
      *      system belonging to the current user 
      * @throws Exception is the current user is not a GPC.
      */
-    public List<String> getStudentIDs() throws Exception {
+    public static List<String> getStudentIDs() throws Exception {
         ArrayList<String> rv = new ArrayList<>();
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
             for (StudentRecord sr : records.values()) {
@@ -139,7 +142,7 @@ public class GRADS {
      * @throws Exception  if the form data could not be retrieved.  SEE NOTE IN 
      *      CLASS HEADER.
      */
-    public StudentRecord getTranscript(String userId) throws Exception {
+    public static StudentRecord getTranscript(String userId) throws Exception {
         StudentRecord rv = null;
         if (records.containsKey(userId)) {
             rv = records.get(userId);
@@ -156,7 +159,7 @@ public class GRADS {
      * @throws Exception  if the transcript data could not be saved, failed
      * a validity check, or a non-GPC tries to call.  SEE NOTE IN CLASS HEADER.
      */
-    public void updateTranscript(String userId, StudentRecord transcript) throws Exception {
+    public static void updateTranscript(String userId, StudentRecord transcript) throws Exception {
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
             records.put(userId, transcript);
         } else {
@@ -186,8 +189,8 @@ public class GRADS {
      * @throws Exception  if the progress summary could not be generated.  
      * SEE NOTE IN CLASS HEADER.
      */
-    public ProgressSummary generateProgressSummary(String userId) throws Exception {
-        return new ProgressSummary(this.getTranscript(userId));
+    public static ProgressSummary generateProgressSummary(String userId) throws Exception {
+        return new ProgressSummary(getTranscript(userId));
     }
 
     /**
@@ -199,7 +202,7 @@ public class GRADS {
      * @throws Exception  if the progress summary could not be generated or the courses  
      * are invalid. SEE NOTE IN CLASS HEADER.
      */
-    public ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception {
+    public static ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception {
         StudentRecord sr = getTranscript(userId);
         for (CourseTaken c : courses) {
             sr.addCourse(c);

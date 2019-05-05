@@ -1,0 +1,9 @@
+[
+    {
+        "networkID": "TESTUSER",
+        "firstName": "TESTFIRST",
+        "lastName": "TESTLAST",
+        "role": "GRADUATE_PROGRAM_COORDINATOR",
+        "program": "COMPUTER_SCIENCE"
+    }
+]

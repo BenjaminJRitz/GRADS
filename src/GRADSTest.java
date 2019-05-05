@@ -5,26 +5,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GRADSTest {
-	GRADS testGRADS;
+	GRADS GRADS;
 	
 	@Before
 	public void setUp() throws Exception {
-		testGRADS = new GRADS();
-		testGRADS.currentUser.networkID = "TESTUSER";
-		testGRADS.currentUser.firstName = "TESTFIRST";
-		testGRADS.currentUser.lastName = "TESTLAST";
-		//Make sure below is changed to "STUDENT" for appropriate tests
-		testGRADS.currentUser.role = "GRADUATE_PROGRAM_COORDINATOR";
-		//Likewise, the other testable strings are:
-		//"COMPUTER_INFORMATION_SYSTEMS"
-		//"COMPUTER_ENGINEERING"
-		testGRADS.currentUser.program = "COMPUTER_SCIENCE";
+        GRADS.init();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		//Clear test class and mark it for garbage collection
-		testGRADS = null;
+		//GRADS = null;
 	}
 	
 	//****************** LoadUsers tests ******************
@@ -32,24 +23,24 @@ public class GRADSTest {
 	//If loadUsers is provided with an invalid file name, it should throw an exception.
 	@Test(expected = java.io.FileNotFoundException.class)
 	public void testThatLoadUsersThrowsFileNotFoundError() throws Exception {
-		String badFileName = null;
-		testGRADS.loadUsers(badFileName);
+		String badFileName = "INVALIDFILENAME";
+		GRADS.loadUsers(badFileName);
 	}
 	
 	//If provided a good user file, users should be populated.
 	@Test
 	public void testLoadUsersPopulatesHashMap() throws Exception {
-		String goodFileName = "users.json";
-		testGRADS.loadUsers(goodFileName);
-		assertFalse(testGRADS.users.isEmpty());
+		String goodFileName = "testusers.json";
+		GRADS.loadUsers(goodFileName);
+		assertFalse(GRADS.users.isEmpty());
 	}
 	
 	//Make sure a specific user ended up in users.
 	@Test
 	public void testLoadUsersHasUser() throws Exception {
-		String goodFileName = "users.json";
-		testGRADS.loadUsers(goodFileName);
-		assertTrue(testGRADS.users.containsKey("ggay"));
+		String goodFileName = "testusers.json";
+		GRADS.loadUsers(goodFileName);
+		assertTrue(GRADS.users.containsKey("TESTUSER"));
 	}
 	
 	//****************** LoadCourses tests ******************
@@ -58,67 +49,62 @@ public class GRADSTest {
 	//If loadCourses is provided with an invalid file name, it should throw an exception.
 	@Test(expected = java.io.FileNotFoundException.class)
 	public void testThatLoadCoursesThrowsFileNotFoundError() throws Exception {
-		String badFileName = null;
-		testGRADS.loadCourses(badFileName);
+		String badFileName = "INVALIDFILENAME";
+		GRADS.loadCourses(badFileName);
 	}
 	
 	//If provided a good course file, courses should be populated.
 	@Test
 	public void testLoadCoursesPopulatesHashMap() throws Exception {
-		String goodFileName = "courses.json";
-		testGRADS.loadCourses(goodFileName);
-		assertFalse(testGRADS.courses.isEmpty());
+		String goodFileName = "testcourses.json";
+		GRADS.loadCourses(goodFileName);
+		assertFalse(GRADS.courses.isEmpty());
 	}
 	
 	//Make sure a specific course ended up in courses.
 	@Test
 	public void testLoadCoursesHasCourse() throws Exception {
-		String goodFileName = "courses.json";
-		testGRADS.loadCourses(goodFileName);
-		assertTrue(testGRADS.courses.containsKey("Software Engineering"));
+		String goodFileName = "testcourses.json";
+		GRADS.loadCourses(goodFileName);
+		assertTrue(GRADS.courses.containsKey("Software Engineering"));
 	}
 	
 	//****************** LoadRecords tests ******************
 	
 	@Test(expected = java.io.FileNotFoundException.class)
 	public void testThatLoadRecordsThrowsFileNotFoundError() throws Exception {
-		String badFileName = null;
-		testGRADS.loadRecords(badFileName);
+		String badFileName = "INVALIDFILENAME";
+		GRADS.loadRecords(badFileName);
 	}
 	
 	public void testLoadRecordsPopulatesHashMap() throws Exception {
-		String goodFileName = "students.json";
-		testGRADS.loadRecords(goodFileName);
-		assertFalse(testGRADS.records.isEmpty());
+		String goodFileName = "testrecords.json";
+		GRADS.loadRecords(goodFileName);
+		assertFalse(GRADS.records.isEmpty());
 	}
 	
 	public void testThatLoadRecordsHasStudent() throws Exception {
-		String goodFileName = "students.json";
-		testGRADS.loadRecords(goodFileName);
-		assertTrue(testGRADS.records.containsKey("mhunt"));
+		String goodFileName = "testrecords.json";
+		GRADS.loadRecords(goodFileName);
+		assertTrue(GRADS.records.containsKey("jdoe"));
 	}
 	
 	//****************** setUser tests ******************
 	@Test 
 	public void testSetUserForValidUser() {
 		try {
-			testGRADS.setUser("ggay");
+			GRADS.setUser("TESTUSER");
 		} catch (UserNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String expected = "ggay";
-		assertTrue(testGRADS.currentUser.networkID.equals(expected));
+		String expected = "TESTUSER";
+		assertTrue(GRADS.currentUser.networkID.equals(expected));
 	}
 	
 	@Test(expected = UserNotFoundException.class)
-	public void testSetUserForInvalidUser() throws Exception {
-		try {
-			testGRADS.setUser("INVALIDUSER");
-		} catch (UserNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void testSetUserForInvalidUser() throws UserNotFoundException {
+		GRADS.setUser("INVALIDUSER");
 	}
 	
 	//****************** GetUser tests ******************
@@ -126,7 +112,17 @@ public class GRADSTest {
 	//This method is just a single statement, so we just test that it returns the default user value.
 	@Test
 	public void testGetUser() {
-		assertTrue(testGRADS.getUser().equals("TESTUSER"));
+		try {
+			GRADS.loadUsers("testusers.json");
+			GRADS.setUser("TESTUSER");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(GRADS.getUser().equals("TESTUSER"));
 	}
 
 
