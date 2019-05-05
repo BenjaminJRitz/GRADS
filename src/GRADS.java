@@ -91,14 +91,18 @@ public class GRADS {
      * Sets the user id (X500) of the user currently using the system.
      * @param userId  the X500 id of the user generating progress summaries.
      * @throws Exception  if the user id is invalid.  SEE NOTE IN CLASS HEADER.
+     * @throws UserNotFoundException 
      */
-    public void setUser(String userId) throws Exception {
+    public void setUser(String userId) throws UserNotFoundException {
         if (users.containsKey(userId)) {
             currentUser = users.get(userId);
         } else {
             //throw some error
+        	throw new UserNotFoundException(userId + " not found in user file");
         }
     }
+    
+
     
     /**
      * Gets the user id of the user currently using the system.
