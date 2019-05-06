@@ -33,6 +33,9 @@ public class ProgressSummary {
     }  // Ending bracket for method getSemesterBegan
 
     ArrayList<RequirementEvaluated> getRequirements() {
+        if (record == null) {
+        	System.out.println("TEST2");
+        }
         var rv = new ArrayList<>(Arrays.asList(GradReqs.evaluate(record)));
         switch (record.getMajor()) {
             case "COMPUTER_INFORMATION_SYSTEMS":

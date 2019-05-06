@@ -12,7 +12,6 @@ public class ProgressSummaryTest {
 	public void setUp() throws Exception {
         GRADS.init();
         GRADS.loadRecords("testrecords.json");
-        ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
 	}
 	
 	@After
@@ -22,18 +21,31 @@ public class ProgressSummaryTest {
 	}
 	
 	@Test
-	public void testGetGPA() {
-		assertTrue(ps.getGPA() - 3.0 < 0.00001); //comparing doubles with threshold
+	public void testGetGPA() throws Exception {
+		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
+		assertTrue(Math.abs(ps.getGPA() - 3.0) < 0.00001); //comparing doubles with threshold
 	}
 	
 	@Test
-	public void testGetters() {
+	public void testGetters() throws Exception {
+		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
 		assertTrue(ps.getStudent().getNetworkID().equals("jdoe"));
 		assertTrue(ps.getMajor().equals("COMPUTER_SCIENCE"));
 		assertTrue(ps.getAdvisor().getFirstName().equals("Duncan"));
 		assertTrue(ps.getTermBegan().getSemesterBegan().equals("FALL"));
 		assertTrue(ps.getTermBegan().getYearBegan().equals("2019"));
 	}
-
+	
+	@Test
+	public void testGetCompletionPercentage() throws Exception {
+		ps = new ProgressSummary(GRADS.getTranscript("sroe"));
+		assertTrue(Math.abs(ps.getCompletionPercentage()) < 0.00001); //comparing doubles with threshold
+		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
+		assertTrue(Math.abs(ps.getCompletionPercentage()) > 0); //comparing doubles with threshold
+		ps = new ProgressSummary(GRADS.getTranscript("jho"));
+		assertTrue(Math.abs(ps.getCompletionPercentage()) > 0); //comparing doubles with threshold
+		ps = new ProgressSummary(GRADS.getTranscript("sdoe"));
+		assertTrue(Math.abs(ps.getCompletionPercentage()) > 0); //comparing doubles with threshold
+	}
 	
 }

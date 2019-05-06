@@ -9,6 +9,10 @@ class RequirementEvaluated {
 
     public RequirementEvaluated(Requirement newRequirement, StudentRecord newsr) {
         sr = newsr;
+        if (sr == null) {
+        	System.out.println("TEST");
+        }
+        r = newRequirement;
         passed = false;
         switch (r.rule) {
             case GPA_GREATER_THAN_TWO:
