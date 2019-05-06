@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GRADSTest {
-	GRADS GRADS;
 	
 	@Before
 	public void setUp() throws Exception {
