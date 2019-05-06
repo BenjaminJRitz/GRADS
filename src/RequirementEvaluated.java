@@ -23,18 +23,6 @@ class RequirementEvaluated {
                 passed = true;
                 //unimplemented
                 break;
-            case ALL_C_OR_BETTER:
-            passed = true;
-                for(int i = 0; i < r.getCourses().length; i++) {
-                    for (int j = 0; j < sr.getCoursesTaken().size(); j++) {
-                        if (r.getCourses()[i].equals(sr.getCoursesTaken().get(j).getCourse().getName())) {
-                            if (sr.getCoursesTaken().get(j).getGrade().value() < 2.0) {
-                                passed = false;
-                            }
-                        }
-                    }
-                }
-                break;
             case ONE_OF:
                 process_X_of(1);
                 break;

@@ -96,7 +96,6 @@ public class GRADS {
      * @throws UserNotFoundException 
      */
     public static void setUser(String userId) throws UserNotFoundException {
-    	System.out.println("ERROR");
         if (users.containsKey(userId)) {
             currentUser = users.get(userId);
         } else {
@@ -120,8 +119,9 @@ public class GRADS {
      * @return a list containing the userId of for each student in the
      *      system belonging to the current user 
      * @throws Exception is the current user is not a GPC.
+     * @throws InvalidPermissionException 
      */
-    public static List<String> getStudentIDs() throws Exception {
+    public static List<String> getStudentIDs() throws InvalidPermissionException {
         ArrayList<String> rv = new ArrayList<>();
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
             for (StudentRecord sr : records.values()) {
@@ -131,6 +131,7 @@ public class GRADS {
             }
         } else {
             //throw some error
+        	throw new InvalidPermissionException("Unauthorized");
         }
         return rv;
     }
@@ -142,11 +143,12 @@ public class GRADS {
      * @throws Exception  if the form data could not be retrieved.  SEE NOTE IN 
      *      CLASS HEADER.
      */
-    public static StudentRecord getTranscript(String userId) throws Exception {
+    public static StudentRecord getTranscript(String userId) throws UserNotFoundException {
         StudentRecord rv = null;
         if (records.containsKey(userId)) {
             rv = records.get(userId);
         } else {
+        	throw new UserNotFoundException("User not found");
             //throw some error
         }
         return rv;
@@ -159,10 +161,11 @@ public class GRADS {
      * @throws Exception  if the transcript data could not be saved, failed
      * a validity check, or a non-GPC tries to call.  SEE NOTE IN CLASS HEADER.
      */
-    public static void updateTranscript(String userId, StudentRecord transcript) throws Exception {
+    public static void updateTranscript(String userId, StudentRecord transcript) throws InvalidPermissionException {
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
             records.put(userId, transcript);
         } else {
+        	throw new InvalidPermissionException("Unauthorized");
             //throw some error
         }
     }
@@ -174,10 +177,11 @@ public class GRADS {
      * @throws Exception  if the note could not be saved or a non-GPC tries to call. 
      * SEE NOTE IN CLASS HEADER.
      */
-    public void addNote(String userId, String note) throws Exception {
+    public static void addNote(String userId, String note) throws InvalidPermissionException {
         if (currentUser.getRole().equals("GRADUATE_PROGRAM_COORDINATOR")) {
             records.get(userId).addNote(note);
         } else {
+        	throw new InvalidPermissionException("Unauthorized");
             //throw some error
         }
     }
@@ -188,8 +192,9 @@ public class GRADS {
      * @returns the student's progress summary in a data class matching the I/O file.
      * @throws Exception  if the progress summary could not be generated.  
      * SEE NOTE IN CLASS HEADER.
+     * @throws UserNotFoundException 
      */
-    public static ProgressSummary generateProgressSummary(String userId) throws Exception {
+    public static ProgressSummary generateProgressSummary(String userId) throws Exception, UserNotFoundException {
         return new ProgressSummary(getTranscript(userId));
     }
 
@@ -201,8 +206,9 @@ public class GRADS {
      * @returns the student's hypothetical progress summary
      * @throws Exception  if the progress summary could not be generated or the courses  
      * are invalid. SEE NOTE IN CLASS HEADER.
+     * @throws UserNotFoundException 
      */
-    public static ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception {
+    public static ProgressSummary simulateCourses(String userId, List<CourseTaken> courses) throws Exception, UserNotFoundException {
         StudentRecord sr = getTranscript(userId);
         for (CourseTaken c : courses) {
             sr.addCourse(c);

@@ -21,13 +21,13 @@ public class ProgressSummaryTest {
 	}
 	
 	@Test
-	public void testGetGPA() throws Exception {
+	public void testGetGPA() throws UserNotFoundException {
 		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
 		assertTrue(Math.abs(ps.getGPA() - 3.0) < 0.00001); //comparing doubles with threshold
 	}
 	
 	@Test
-	public void testGetters() throws Exception {
+	public void testGetters() throws UserNotFoundException {
 		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));
 		assertTrue(ps.getStudent().getNetworkID().equals("jdoe"));
 		assertTrue(ps.getMajor().equals("COMPUTER_SCIENCE"));
@@ -37,7 +37,7 @@ public class ProgressSummaryTest {
 	}
 	
 	@Test
-	public void testGetCompletionPercentage() throws Exception {
+	public void testGetCompletionPercentage() throws UserNotFoundException {
 		ps = new ProgressSummary(GRADS.getTranscript("sroe"));
 		assertTrue(Math.abs(ps.getCompletionPercentage()) < 0.00001); //comparing doubles with threshold
 		ps = new ProgressSummary(GRADS.getTranscript("jdoe"));

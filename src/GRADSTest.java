@@ -1,9 +1,12 @@
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("static-access")
 public class GRADSTest {
 	
 	@Before
@@ -14,7 +17,6 @@ public class GRADSTest {
 	@After
 	public void tearDown() throws Exception {
 		//Clear test class and mark it for garbage collection
-		//GRADS = null;
 	}
 	
 	//****************** LoadUsers tests ******************
@@ -92,8 +94,13 @@ public class GRADSTest {
 	@Test 
 	public void testSetUserForValidUser() {
 		try {
+			GRADS.loadUsers("testusers.json");
 			GRADS.setUser("TESTUSER");
 		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -109,7 +116,6 @@ public class GRADSTest {
 	//****************** GetUser tests ******************
 	
 	//This method is just a single statement, so we just test that it returns the default user value.
-	@Test
 	public void testGetUser() {
 		try {
 			GRADS.loadUsers("testusers.json");
@@ -122,6 +128,111 @@ public class GRADSTest {
 			e.printStackTrace();
 		}
 		assertTrue(GRADS.getUser().equals("TESTUSER"));
+	}
+	
+	//****************** getStudentIDs tests ******************
+	@Test(expected = InvalidPermissionException.class)
+	public void testInvalidPermissionGetStudentIDs() throws UserNotFoundException, Exception, InvalidPermissionException {
+		GRADS.loadUsers("testusers.json");
+		GRADS.setUser("TESTUSER2");
+		List<String> studentIDs = GRADS.getStudentIDs();
+	}
+	
+	@Test
+	public void testGetStudentIDsForInvalidMajor() {
+		GRADS.currentUser.program = "INVALIDMAJOR";
+		List<String> studentIDs;
+		try {
+			studentIDs = GRADS.getStudentIDs();
+			assertTrue(studentIDs.isEmpty());
+		} catch (InvalidPermissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testGetStudentIDsForValidInput() {
+		try {
+			GRADS.loadUsers("testusers.json");
+			GRADS.setUser("TESTUSER");
+			GRADS.loadRecords("testrecords.json");
+			List<String> studentIDs = GRADS.getStudentIDs();
+			assertTrue(studentIDs.contains("jdoe"));
+		} catch (InvalidPermissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	//****************** getTranscript tests ******************
+	@Test(expected = UserNotFoundException.class)
+	public void testGetTranscriptInvalidUser() throws UserNotFoundException {
+		GRADS.getTranscript("INVALIDUSERID");
+	}
+	
+	@Test
+	public void testGetTranscriptValidUser() throws Exception, UserNotFoundException {
+		GRADS.loadRecords("testrecords.json");
+		try {
+			StudentRecord GRADSrecord = GRADS.getTranscript("jdoe");
+			assertTrue(GRADSrecord.getStudent().networkId.equals("jdoe"));
+		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	//****************** updateTranscript tests ******************
+	
+	@Test(expected = InvalidPermissionException.class)
+	public void testUpdateTranscriptInvalidPermission() throws InvalidPermissionException {
+		GRADS.currentUser.role = "STUDENT";
+		StudentRecord testRecord = new StudentRecord();
+		GRADS.updateTranscript("TESTSTUDENT", testRecord);
+	}
+	
+	@Test
+	public void testUpdateTranscriptValidPermission() throws Exception {
+		GRADS.loadRecords("testrecords.json");
+		try {
+			GRADS.updateTranscript("jdoe", new StudentRecord());
+			assertTrue(GRADS.records.containsKey("jroe"));
+		} catch (InvalidPermissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	//****************** addNote tests ******************
+	
+	@Test(expected = InvalidPermissionException.class)
+	public void testAddNoteInvalidPermission() throws InvalidPermissionException {
+		GRADS.currentUser.role = "STUDENT";
+		GRADS.addNote("TESTUSER", "ILLEGAL NOTE");
+	}
+	
+	@Test 
+	public void testAddNoteValidInput() {
+		GRADS.records.put("TESTUSER", new StudentRecord());
+		try {
+			GRADS.addNote("TESTUSER", "LEGAL NOTE");
+			assertTrue(GRADS.records.get("TESTUSER").notes.contains("LEGAL NOTE"));
+		} catch (InvalidPermissionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 

@@ -5,5 +5,12 @@
         "lastName": "TESTLAST",
         "role": "GRADUATE_PROGRAM_COORDINATOR",
         "program": "COMPUTER_SCIENCE"
+    },
+        {
+        "networkID": "TESTUSER2",
+        "firstName": "TESTFIRST2",
+        "lastName": "TESTLAST2",
+        "role": "STUDENT",
+        "program": "COMPUTER_SCIENCE"
     }
 ]
